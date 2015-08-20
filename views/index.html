@@ -10,7 +10,7 @@
     </div>
   </div>
   <div id="control-panel" class="col-sm-4 col-lg-3 clearfix">
-    <div class="col-xs-6 col-sm-12">
+    <div class="col-xs-6 col-sm-12" id="activity-panel">
       <div class="panel panel-default">
         <div class="panel-body">
           <div>
@@ -20,30 +20,30 @@
               <option>{{ hotel.name }}</option>
               {% endfor %}
             </select>
-            <button class="btn btn-primary btn-circle pull-right">+</button>
+            <button class="btn btn-primary btn-circle pull-right" data-type="hotel">+</button>
           </div>
           <div>
             <h4>Restaurants</h4>
-            <select>
+            <select class="restaurant">
               {% for restaurant in all_restaurants %}
               <option>{{ restaurant.name }}</option>
               {% endfor %}
             </select>
-            <button class="btn btn-primary btn-circle pull-right">+</button>
+            <button class="btn btn-primary btn-circle pull-right" data-type="restaurant">+</button>
           </div>
           <div>
             <h4>Activities</h4>
-            <select>
+            <select class="activity">
               {% for activity in all_activities %}
               <option>{{ activity.name }}</option>
               {% endfor %}
             </select>
-            <button class="btn btn-primary btn-circle pull-right">+</button>
+            <button class="btn btn-primary btn-circle pull-right" data-type="activity">+</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-xs-6 col-sm-12">
+    <div class="col-xs-6 col-sm-12" id="agenda-panel">
       <h3>
         <span id="day-title">
           <span>Day 2</span>
@@ -53,46 +53,26 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="day-buttons">
-            <button class="btn btn-circle day-btn">1</button>
-            <button class="btn btn-circle day-btn current-day">2</button>
-            <button class="btn btn-circle day-btn">3</button>
-            <button class="btn btn-circle day-btn">+</button>
+            <button class="btn btn-circle day-btn day">1</button>
+            <button class="btn btn-circle day-btn day current-day">2</button>
+            <button class="btn btn-circle day-btn day">3</button>
+            <button class="btn btn-circle day-btn" id="add-day">+</button>
           </div>
         </div>
         <div class="panel-body">
           <div>
             <h4>My Hotel</h4>
-            <ul class="list-group">
-              <div class="itinerary-item">
-                <span class="title">Andaz Wall Street</span>
-                <button class="btn btn-xs btn-danger remove btn-circle">x</button>
-              </div>
+            <ul class="list-group hotel">
             </ul>
           </div>
           <div>
             <h4>My Restaurants</h4>
-            <ul class="list-group">
-              <div class="itinerary-item">
-                <span class="title">Bouley</span>
-                <button class="btn btn-xs btn-danger remove btn-circle">x</button>
-              </div>
-              <div class="itinerary-item">
-                <span class="title">The Capital Grille</span>
-                <button class="btn btn-xs btn-danger remove btn-circle">x</button>
-              </div>
+            <ul class="list-group restaurant">
             </ul>
           </div>
           <div>
             <h4>My Activities</h4>
-            <ul class="list-group">
-              <div class="itinerary-item">
-                <span class="title">Mahayana Buddhist Temple Association</span>
-                <button class="btn btn-xs btn-danger remove btn-circle">x</button>
-              </div>
-              <div class="itinerary-item">
-                <span class="title">South Street Seaport</span>
-                <button class="btn btn-xs btn-danger remove btn-circle">x</button>
-              </div>
+            <ul class="list-group activity">
             </ul>
           </div>
         </div>

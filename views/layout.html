@@ -154,5 +154,13 @@
       }]
     }];
   </script>
+  <script>
+    {% autoescape false %}
+    var all_hotels = {{ all_hotels | json }};
+    var all_restaurants = {{ all_restaurants | json }};
+    var all_activities = {{ all_activities | json }};
+    {% endautoescape %}
+  </script>
+  <script src="/scripts/index.js"></script>
   </body>
 </html>
