@@ -19,6 +19,11 @@ $(document).ready(function(){
       if(arr.some(function(span){
         return $(span).text() === activity_name;
       })) return;
+      if(activity_type === 'restaurant' &&
+       agenda.days[agenda.selected][activity_type].length>=3){
+        alert("Don't eat so much");
+        return;
+      }
       marker = addToMap(activity_name,activity_type);
       agenda.days[agenda.selected][activity_type].push(new Activity(activity_name,marker));
     }
@@ -65,6 +70,7 @@ $(document).ready(function(){
       for(var key in agenda.days[agenda.selected]){
         $('#agenda-panel .'+key).html('');
       }
+      agenda.days=[new Day()];
       return;
     }
 
@@ -84,6 +90,8 @@ $(document).ready(function(){
     updateDay();
     zoom();
   });
+
+
 });
 
 function genNewAddition(name,type){
@@ -119,20 +127,43 @@ function addToMap(name,type){
       icon = {icon: '/images/star-3.png'};
   }
   for(var i=0;i<all.length;i++){
-    if(all[i].name===name){
-      var marker = drawLocation(all[i].place[0].location,icon);
-      // agenda.days[agenda.selected].bouinds
+    var activity = all[i];
+    if(activity.name===name){
+      var tooltips = '<h3>Name: '+activity.name+'</h3>';
+      switch(type){
+        case 'hotel':
+          tooltips+='<p>Stars: '+activity.num_stars+
+                    '</br>Amenities: '+activity.amenities.join(', ')+
+                    '</p>';
+          break;
+        case 'restaurant':
+          tooltips+='<p>Price: '+activity.price+
+                    '</br>Cuisines: '+activity.cuisines.join(', ')+
+                    '</p>';
+          break;
+        default:
+          tooltips+='<p>Age: '+activity.age+'</p>';
+      }
+      var marker = drawLocation(activity.place[0].location,icon,tooltips);
+      var infoWindow = new google.maps.InfoWindow({
+        content : marker.content
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.close();
+        infoWindow.open(map,marker);
+      });
       return marker;
     }
   }
 }
 
-function drawLocation (location, opts) {
+function drawLocation (location, opts, tooltips) {
   if (typeof opts !== 'object') {
     opts = {};
   }
   opts.position = new google.maps.LatLng(location[0], location[1]);
   opts.map = map;
+  opts.content = tooltips;
   return new google.maps.Marker(opts);
 }
 
