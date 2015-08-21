@@ -12,6 +12,10 @@ $(document).ready(function(){
     var marker;
     if(activity_type=='hotel'){
       $('ul.'+activity_type).html('');
+      if(agenda.days[agenda.selected].hotel.length>0){
+        console.log("hi");
+        agenda.days[agenda.selected].hotel[0].marker.setMap(null);
+      }
       marker = addToMap(activity_name,activity_type);
       agenda.days[agenda.selected].hotel=[new Activity(activity_name,marker)];
     }else{
@@ -138,11 +142,11 @@ function addToMap(name,type){
           break;
         case 'restaurant':
           tooltips+='<p>Price: '+activity.price+
-                    '</br>Cuisines: '+activity.cuisines.join(', ')+
+                    '</br>Cuisines: '+activity.cuisine.join(', ')+
                     '</p>';
           break;
         default:
-          tooltips+='<p>Age: '+activity.age+'</p>';
+          tooltips+='<p>Age Range: '+activity.age_range+'</p>';
       }
       var marker = drawLocation(activity.place[0].location,icon,tooltips);
       var infoWindow = new google.maps.InfoWindow({
